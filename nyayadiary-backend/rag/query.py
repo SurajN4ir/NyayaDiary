@@ -62,8 +62,9 @@ def rephrase_query(query, history):
     # Format last few messages to give context
     history_str = ""
     for msg in history[-5:]:
-        sender_label = "User" if getattr(msg, "sender", None) == "user" or msg.get("sender", None) == "user" else "Assistant"
-        text = getattr(msg, "text", "") or msg.get("text", "")
+        sender_val = getattr(msg, "sender", None) or (msg.get("sender") if isinstance(msg, dict) else "")
+        sender_label = "User" if sender_val == "user" else "Assistant"
+        text = getattr(msg, "text", None) or (msg.get("text") if isinstance(msg, dict) else "")
         history_str += f"{sender_label}: {text}\n"
         
     prompt = f"""

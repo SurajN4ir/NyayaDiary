@@ -24,8 +24,9 @@ def generate_answer(context, query, history=None):
     if history:
         # Pass the last 5 messages to maintain conversation flow
         for msg in history[-5:]:
-            role = "user" if getattr(msg, "sender", None) == "user" or msg.get("sender", None) == "user" else "assistant"
-            text = getattr(msg, "text", "") or msg.get("text", "")
+            sender_val = getattr(msg, "sender", None) or (msg.get("sender") if isinstance(msg, dict) else "")
+            role = "user" if sender_val == "user" else "assistant"
+            text = getattr(msg, "text", None) or (msg.get("text") if isinstance(msg, dict) else "")
             messages.append({"role": role, "content": text})
 
     prompt = f"""
