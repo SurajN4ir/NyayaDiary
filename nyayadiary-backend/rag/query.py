@@ -24,14 +24,22 @@ else:
     with open(texts_pkl_path, "rb") as f:
         texts = pickle.load(f)
 
-# Load embedding model using FastEmbed for CPU-efficient, low-memory execution
-model = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+# Global variable for the model, lazy-loaded on the first query
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        # Load embedding model using FastEmbed for CPU-efficient, low-memory execution
+        _model = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    return _model
 
 
 def retrieve(query, k=6):
     if index is None or not texts:
         return []
     try:
+        model = get_model()
         query_embedding = np.array(list(model.embed([query]))).astype("float32")
         D, I = index.search(query_embedding, k)
 
