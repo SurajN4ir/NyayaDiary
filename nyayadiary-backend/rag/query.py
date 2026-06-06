@@ -3,7 +3,7 @@ import sys
 import pickle
 import numpy as np
 import faiss
-from sentence_transformers import SentenceTransformer
+from fastembed import TextEmbedding
 from rag.llm import generate_answer
 
 # Reconfigure stdout to use UTF-8 to prevent Windows terminal emoji encoding errors
@@ -24,15 +24,15 @@ else:
     with open(texts_pkl_path, "rb") as f:
         texts = pickle.load(f)
 
-# Load embedding model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Load embedding model using FastEmbed for CPU-efficient, low-memory execution
+model = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 
 def retrieve(query, k=6):
     if index is None or not texts:
         return []
     try:
-        query_embedding = model.encode([query]).astype("float32")
+        query_embedding = np.array(list(model.embed([query]))).astype("float32")
         D, I = index.search(query_embedding, k)
 
         results = []
