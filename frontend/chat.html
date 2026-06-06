@@ -412,7 +412,10 @@ async function sendMessage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ query: message })
+      body: JSON.stringify({ 
+        query: message,
+        history: currentChat.messages.slice(0, -1)
+      })
     });
 
     const data = await res.json();

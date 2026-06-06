@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+from typing import List, Optional
+
 from rag.query import ask
 
 app = FastAPI()
@@ -15,8 +17,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class ChatMessage(BaseModel):
+    sender: str
+    text: str
+
 class Query(BaseModel):
     query: str
+    history: Optional[List[ChatMessage]] = []
 
 @app.get("/")
 def home():
@@ -24,5 +31,5 @@ def home():
 
 @app.post("/chat")
 def chat(q: Query):
-    answer, sources = ask(q.query)
+    answer, sources = ask(q.query, q.history)
     return {"response": answer, "sources": sources}

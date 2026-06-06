@@ -55,8 +55,51 @@ def retrieve(query, k=6):
         return []
 
 
-def ask(query):
-    chunks = retrieve(query)
+def rephrase_query(query, history):
+    if not history:
+        return query
+    
+    # Format last few messages to give context
+    history_str = ""
+    for msg in history[-5:]:
+        sender_label = "User" if getattr(msg, "sender", None) == "user" or msg.get("sender", None) == "user" else "Assistant"
+        text = getattr(msg, "text", "") or msg.get("text", "")
+        history_str += f"{sender_label}: {text}\n"
+        
+    prompt = f"""
+Given the following conversation history and a follow-up question, rephrase the follow-up question to be a standalone search query (in English) containing all the relevant context from the history.
+Do NOT answer the question. Just output the rephrased standalone query.
+
+Conversation History:
+{history_str}
+
+Follow-up Question: {query}
+Standalone Query:"""
+    
+    try:
+        from rag.llm import client
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant that rephrases questions to include context."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.0,
+            max_tokens=100
+        )
+        rephrased = response.choices[0].message.content.strip()
+        print(f"🔍 Rephrased query: '{query}' -> '{rephrased}'")
+        return rephrased
+    except Exception as e:
+        print("❌ Error rephrasing query:", e)
+        return query
+
+
+def ask(query, history=None):
+    # Condense query based on history for better FAISS search accuracy
+    search_query = rephrase_query(query, history) if history else query
+    
+    chunks = retrieve(search_query)
 
     if not chunks:
         return "No relevant legal information found.", []
@@ -70,7 +113,7 @@ def ask(query):
         )
     context = "\n\n---\n\n".join(context_parts)
 
-    answer = generate_answer(context, query)
+    answer = generate_answer(context, query, history)
 
     # Extract unique source filenames and page numbers
     sources = []

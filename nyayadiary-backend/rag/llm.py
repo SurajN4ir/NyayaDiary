@@ -13,16 +13,27 @@ if not GROQ_API_KEY:
 client = Groq(api_key=GROQ_API_KEY)
 
 
-def generate_answer(context, query):
+def generate_answer(context, query, history=None):
+    messages = [
+        {
+            "role": "system",
+            "content": "You are NyayaDiary, a helpful legal assistant for Indian citizens. Explain laws clearly using the provided context."
+        }
+    ]
+
+    if history:
+        # Pass the last 5 messages to maintain conversation flow
+        for msg in history[-5:]:
+            role = "user" if getattr(msg, "sender", None) == "user" or msg.get("sender", None) == "user" else "assistant"
+            text = getattr(msg, "text", "") or msg.get("text", "")
+            messages.append({"role": role, "content": text})
+
     prompt = f"""
 You are NyayaDiary, a legal awareness assistant for Indian citizens.
 
 Your task:
-- Explain laws clearly and correctly
-- Use ONLY the context provided
-- If context is partial, still answer as best as possible using it
-- Do NOT say "constitution does not list rights" if information is present
-- Summarize clearly in bullet points if needed
+- Explain laws clearly and correctly using the provided Context.
+- Summarize clearly in bullet points if needed.
 
 Context:
 {context}
@@ -30,17 +41,14 @@ Context:
 Question:
 {query}
 
-Answer clearly:
-Give a complete answer. If it's a list, list all key points.
+Answer clearly and directly:
 """
+    messages.append({"role": "user", "content": prompt})
 
     try:
         response = client.chat.completions.create(
             model="llama-3.1-8b-instant",
-            messages=[
-                {"role": "system", "content": "You are a helpful legal assistant."},
-                {"role": "user", "content": prompt}
-            ],
+            messages=messages,
             temperature=0.2,
             max_tokens=500
         )
