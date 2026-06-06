@@ -345,6 +345,11 @@
         <input id="profileNameInput" type="text" class="w-full bg-white/10 border border-outline-variant/30 focus:border-nyaya-gold focus:ring-1 focus:ring-nyaya-gold text-white text-sm px-3 py-2 rounded focus:outline-none" value="" />
       </div>
       
+      <div>
+        <label class="block text-xs text-on-primary-container font-label-caps uppercase tracking-wider mb-1">Backend Server URL</label>
+        <input id="profileBackendUrlInput" type="text" class="w-full bg-white/10 border border-outline-variant/30 focus:border-nyaya-gold focus:ring-1 focus:ring-nyaya-gold text-white text-sm px-3 py-2 rounded focus:outline-none" value="" placeholder="https://nyayadiary-backend.onrender.com" />
+      </div>
+      
       <button onclick="saveProfileSettings()" class="w-full bg-nyaya-gold text-primary font-button py-2.5 rounded hover:bg-opacity-90 transition-all text-sm font-bold mt-2">
         Save Changes
       </button>
@@ -406,7 +411,7 @@ async function sendMessage() {
   try {
     const apiBase = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
       ? 'http://127.0.0.1:8000'
-      : 'https://nyayadiary-backend.onrender.com';
+      : backendServerUrl;
     const res = await fetch(`${apiBase}/chat`, {
       method: "POST",
       headers: {
@@ -594,6 +599,7 @@ const sampleAIHtml = `
 let chats = [];
 let activeChatId = "";
 let userProfileName = "Citizen Advocate";
+let backendServerUrl = "https://nyayadiary-backend.onrender.com";
 
 // Initialize App
 window.addEventListener("DOMContentLoaded", () => {
@@ -604,9 +610,13 @@ function initApp() {
   const storedChats = localStorage.getItem("nyayadiary_chats");
   const storedActiveId = localStorage.getItem("nyayadiary_active_chat_id");
   const storedName = localStorage.getItem("nyayadiary_profile_name");
+  const storedBackendUrl = localStorage.getItem("nyayadiary_backend_url");
 
   if (storedName) {
     userProfileName = storedName;
+  }
+  if (storedBackendUrl) {
+    backendServerUrl = storedBackendUrl;
   }
   const nameSpan = document.getElementById("profileNameSpan");
   if (nameSpan) nameSpan.innerText = userProfileName;
@@ -1684,9 +1694,11 @@ function startSpeechRecognition() {
 function openProfileModal() {
   const modal = document.getElementById("profileModal");
   const input = document.getElementById("profileNameInput");
+  const urlInput = document.getElementById("profileBackendUrlInput");
   if (!modal || !input) return;
 
   input.value = userProfileName;
+  if (urlInput) urlInput.value = backendServerUrl;
   modal.classList.remove("hidden");
   setTimeout(() => {
     modal.firstElementChild.classList.remove("scale-95");
@@ -1707,14 +1719,30 @@ function closeProfileModal() {
 
 function saveProfileSettings() {
   const input = document.getElementById("profileNameInput");
+  const urlInput = document.getElementById("profileBackendUrlInput");
   if (!input) return;
 
+  let changed = false;
+
   const newName = input.value.trim();
-  if (newName) {
+  if (newName && newName !== userProfileName) {
     userProfileName = newName;
     localStorage.setItem("nyayadiary_profile_name", newName);
     const nameSpan = document.getElementById("profileNameSpan");
     if (nameSpan) nameSpan.innerText = newName;
+    changed = true;
+  }
+
+  if (urlInput) {
+    const newUrl = urlInput.value.trim();
+    if (newUrl && newUrl !== backendServerUrl) {
+      backendServerUrl = newUrl;
+      localStorage.setItem("nyayadiary_backend_url", newUrl);
+      changed = true;
+    }
+  }
+
+  if (changed) {
     showToast("Profile settings saved!");
   }
   closeProfileModal();
