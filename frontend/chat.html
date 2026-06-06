@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NyayaDiary - Legal Assistant</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2300071b'/%3E%3Ctext y='75' x='15' font-size='70' fill='%23c9a84c'%3E⚖️%3C/text%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Markdown Parser CDN -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Custom CSS for Markdown styling in Tailwind -->
+<style>
+  .markdown-content ul {
+    list-style-type: disc;
+    margin-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .markdown-content ol {
+    list-style-type: decimal;
+    margin-left: 1.25rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .markdown-content li {
+    margin-bottom: 0.25rem;
+  }
+  .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+    font-family: 'Newsreader', serif;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #00071b;
+  }
+  .markdown-content h1 { font-size: 1.5rem; }
+  .markdown-content h2 { font-size: 1.25rem; }
+  .markdown-content h3 { font-size: 1.125rem; }
+  .markdown-content p {
+    margin-bottom: 0.5rem;
+  }
+  .markdown-content p:last-child {
+    margin-bottom: 0;
+  }
+  .markdown-content strong {
+    font-weight: 600;
+    color: #00071b;
+  }
+</style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "primary-container": "#0f1f3d",
+                  "secondary-fixed": "#ffe08f",
+                  "tertiary": "#1b0001",
+                  "on-secondary-fixed-variant": "#584400",
+                  "surface-container-low": "#f3f4f5",
+                  "outline": "#75777e",
+                  "outline-variant": "#c5c6ce",
+                  "inverse-primary": "#b7c6ed",
+                  "background": "#f8f9fa",
+                  "on-primary": "#ffffff",
+                  "on-error": "#ffffff",
+                  "on-secondary-fixed": "#241a00",
+                  "on-background": "#191c1d",
+                  "surface": "#f8f9fa",
+                  "surface-bright": "#f8f9fa",
+                  "on-surface-variant": "#45474e",
+                  "on-tertiary": "#ffffff",
+                  "secondary": "#755b00",
+                  "inverse-on-surface": "#f0f1f2",
+                  "surface-tint": "#505e80",
+                  "on-tertiary-fixed-variant": "#930010",
+                  "tertiary-fixed": "#ffdad6",
+                  "surface-variant": "#e1e3e4",
+                  "tertiary-container": "#490004",
+                  "tertiary-fixed-dim": "#ffb3ac",
+                  "on-secondary": "#ffffff",
+                  "on-secondary-container": "#785d00",
+                  "on-primary-fixed-variant": "#384667",
+                  "on-error-container": "#93000a",
+                  "primary-fixed-dim": "#b7c6ed",
+                  "surface-container-lowest": "#ffffff",
+                  "inverse-surface": "#2e3132",
+                  "secondary-fixed-dim": "#e6c364",
+                  "surface-dim": "#d9dadb",
+                  "on-surface": "#191c1d",
+                  "on-tertiary-fixed": "#410003",
+                  "secondary-container": "#fed977",
+                  "surface-container-high": "#e7e8e9",
+                  "primary-fixed": "#d8e2ff",
+                  "surface-container-highest": "#e1e3e4",
+                  "on-tertiary-container": "#f44843",
+                  "error-container": "#ffdad6",
+                  "on-primary-container": "#7887ab",
+                  "primary": "#00071b",
+                  "surface-container": "#edeeef",
+                  "error": "#ba1a1a",
+                  "on-primary-fixed": "#0a1b39",
+                  "nyaya-gold": "#c9a84c"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "spacing": {
+                  "stack-sm": "8px",
+                  "stack-md": "24px",
+                  "container-max": "1200px",
+                  "margin-mobile": "16px",
+                  "stack-lg": "48px",
+                  "gutter": "24px",
+                  "unit": "4px"
+          },
+          "fontFamily": {
+                  "h2": [
+                          "Newsreader"
+                  ],
+                  "h3": [
+                          "Newsreader"
+                  ],
+                  "body-md": [
+                          "Public Sans"
+                  ],
+                  "body-lg": [
+                          "Public Sans"
+                  ],
+                  "h1": [
+                          "Newsreader"
+                  ],
+                  "label-caps": [
+                          "Public Sans"
+                  ],
+                  "button": [
+                          "Public Sans"
+                  ]
+          },
+          "fontSize": {
+                  "h2": [
+                          "32px",
+                          {
+                                  "lineHeight": "1.25",
+                                  "fontWeight": "600"
+                          }
+                  ],
+                  "h3": [
+                          "24px",
+                          {
+                                  "lineHeight": "1.3",
+                                  "fontWeight": "500"
+                          }
+                  ],
+                  "body-md": [
+                          "16px",
+                          {
+                                  "lineHeight": "1.6",
+                                  "fontWeight": "400"
+                          }
+                  ],
+                  "body-lg": [
+                          "18px",
+                          {
+                                  "lineHeight": "1.6",
+                                  "fontWeight": "400"
+                          }
+                  ],
+                  "h1": [
+                          "40px",
+                          {
+                                  "lineHeight": "1.2",
+                                  "letterSpacing": "-0.02em",
+                                  "fontWeight": "600"
+                          }
+                  ],
+                  "label-caps": [
+                          "12px",
+                          {
+                                  "lineHeight": "1.0",
+                                  "letterSpacing": "0.05em",
+                                  "fontWeight": "700"
+                          }
+                  ],
+                  "button": [
+                          "14px",
+                          {
+                                  "lineHeight": "1.0",
+                                  "fontWeight": "600"
+                          }
+                  ]
+          }
+  },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex overflow-hidden">
+<!-- Mobile Sidebar Backdrop -->
+<div id="sidebarBackdrop" onclick="toggleMobileSidebar(false)" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity duration-300"></div>
+
+<!-- Side Navigation -->
+<nav id="sidebar" class="fixed md:sticky top-0 left-0 h-full w-[240px] bg-primary-container flex-shrink-0 flex flex-col z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+<div class="p-6">
+<div class="text-on-primary font-h2 text-h2 mb-2">NyayaDiary</div>
+<div class="text-on-primary-container font-label-caps text-label-caps uppercase tracking-widest">Legal Assistant</div>
+</div>
+<div class="px-4 mb-6">
+<button onclick="startNewChat()" class="w-full bg-nyaya-gold text-primary font-button text-button py-3 px-4 rounded flex items-center justify-center gap-2 hover:bg-opacity-90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+        New Chat
+      </button>
+</div>
+<div class="flex-1 overflow-y-auto px-4 flex flex-col gap-1">
+<a id="navMyChats" onclick="showMyChats()" class="flex items-center gap-3 p-3 rounded bg-white bg-opacity-10 text-on-primary border-l-4 border-nyaya-gold cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+<span class="font-body-md text-sm font-medium">My Chats</span>
+</a>
+<a id="navRights" onclick="loadRights()" class="flex items-center gap-3 p-3 rounded text-on-primary-container hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span class="font-body-md text-sm font-medium">Know Your Rights</span>
+</a>
+<div id="bookmarkedChatsHeader" class="mt-6 mb-2 px-3 text-on-primary-container font-label-caps text-label-caps uppercase tracking-widest opacity-70 hidden">Bookmarked Chats</div>
+<div id="bookmarkedChatsList" class="flex flex-col gap-1 overflow-y-auto max-h-[200px] mb-4">
+  <!-- Dynamic bookmarked chats injected by JS -->
+</div>
+<div class="mt-6 mb-2 px-3 text-on-primary-container font-label-caps text-label-caps uppercase tracking-widest opacity-70">Chat History</div>
+<div id="recentChatsList" class="flex flex-col gap-1 overflow-y-auto max-h-[300px] mb-4">
+  <!-- Dynamic list injected by JS -->
+</div>
+</div>
+<div class="p-4 mt-auto">
+<div onclick="openProfileModal()" class="flex items-center gap-3 text-on-primary cursor-pointer hover:bg-white hover:bg-opacity-5 p-2 rounded transition-colors">
+<div class="w-8 h-8 rounded-full bg-nyaya-gold flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">account_circle</span>
+</div>
+<span id="profileNameSpan" class="font-body-md text-sm font-medium truncate">User Profile</span>
+</div>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col relative h-full">
+<!-- Topbar -->
+<header class="flex items-center justify-between p-4 border-b border-outline-variant bg-surface-lowest">
+<div class="flex items-center gap-4">
+<button onclick="toggleMobileSidebar(true)" class="md:hidden text-on-background">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-h3 text-h3 text-on-background m-0">Tenant Eviction Rights</h1>
+</div>
+<div id="headerActions" class="flex gap-2">
+<button onclick="toggleBookmark(this)" class="p-2 text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">bookmark_border</span>
+</button>
+<button onclick="shareChat()" class="p-2 text-on-surface-variant hover:text-on-background transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</header>
+<!-- Chat Area -->
+<div id="chatContainer" class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-stack-md">
+<!-- User Message -->
+<div class="self-end max-w-3xl w-full flex justify-end">
+<div class="bg-primary-container text-on-primary p-4 rounded-xl rounded-tr-sm">
+<p class="font-body-md text-body-md">My landlord gave me a 2-day verbal notice to leave the apartment in Bangalore. What are my rights?</p>
+</div>
+</div>
+<!-- AI Response -->
+<div class="self-start max-w-3xl w-full flex gap-4">
+<div class="w-8 h-8 rounded-full bg-nyaya-gold flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</div>
+<div class="flex flex-col gap-4 flex-1">
+<!-- Summary Card -->
+<div class="bg-surface border border-outline-variant rounded p-6">
+<h3 class="font-h3 text-xl mb-2 text-on-background">Summary</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A 2-day verbal notice is generally invalid under the Karnataka Rent Control Act, 2001. A landlord must provide written notice, and the duration depends on the lease agreement (typically 1 month). You cannot be forcibly evicted without a court order.</p>
+</div>
+<!-- Law References -->
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-variant border border-outline-variant rounded text-sm font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">gavel</span>
+              Karnataka Rent Control Act, 2001
+            </span>
+<span class="px-3 py-1 bg-surface-variant border border-outline-variant rounded text-sm font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">description</span>
+              Transfer of Property Act, 1882
+            </span>
+</div>
+<!-- What To Do -->
+<div class="bg-surface border border-outline-variant rounded p-6">
+<h3 class="font-h3 text-xl mb-4 text-on-background">Immediate Steps</h3>
+<ol class="list-decimal list-inside space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li class="pl-2"><strong>Do not leave immediately.</strong> A verbal notice holds no legal weight.</li>
+<li class="pl-2"><strong>Demand written notice.</strong> Request that the landlord communicate the eviction notice in writing, specifying the reason.</li>
+<li class="pl-2"><strong>Review your lease.</strong> Check the termination clause in your rental agreement for the required notice period.</li>
+<li class="pl-2"><strong>File a police complaint.</strong> If the landlord attempts physical force, locks you out, or cuts off essential utilities (water/electricity), go to the nearest police station immediately.</li>
+</ol>
+</div>
+<!-- Disclaimer -->
+<div class="bg-surface-container-low border-l-4 border-outline text-on-surface-variant p-4 text-sm mt-2">
+<p class="font-body-md"><strong>Disclaimer:</strong> This information is for educational purposes and does not constitute formal legal advice. Consult a qualified advocate for specific guidance.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div id="chatInputArea" class="p-4 md:p-6 bg-surface-lowest border-t border-outline-variant mb-[56px] md:mb-0">
+<div class="max-w-4xl mx-auto relative">
+<div class="flex items-end gap-2 bg-white border border-outline-variant focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container rounded p-2 transition-all">
+<button id="micButton" onclick="startSpeechRecognition()" class="p-2 text-on-surface-variant hover:text-primary-container hover:bg-surface-variant/20 transition-all rounded" title="Voice Input">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<textarea class="flex-1 border-none focus:ring-0 resize-none font-body-md text-body-md py-2 bg-transparent text-on-background" placeholder="Ask about your rights..." rows="1"></textarea>
+<button onclick="sendMessage()" class="p-2 bg-nyaya-gold text-primary rounded hover:bg-opacity-90 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="text-center text-xs text-on-surface-variant mt-2 font-body-md">NyayaDiary can make mistakes. Consider verifying important information.</p>
+</div>
+</div>
+
+<!-- Profile Settings Modal -->
+<div id="profileModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden" onclick="if(event.target===this) closeProfileModal()">
+  <div class="bg-primary-container border border-outline-variant/30 text-on-primary rounded-xl max-w-sm w-full p-6 shadow-2xl relative transform scale-95 transition-all duration-300">
+    <button onclick="closeProfileModal()" class="absolute top-4 right-4 text-on-primary-container hover:text-white transition-colors">
+      <span class="material-symbols-outlined text-[20px]">close</span>
+    </button>
+    
+    <div class="flex flex-col items-center gap-3 mb-6">
+      <div class="w-16 h-16 rounded-full bg-nyaya-gold flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined text-[36px]">account_circle</span>
+      </div>
+      <h3 class="font-h3 text-xl font-semibold">User Settings</h3>
+    </div>
+    
+    <div class="flex flex-col gap-4">
+      <div>
+        <label class="block text-xs text-on-primary-container font-label-caps uppercase tracking-wider mb-1">Display Name</label>
+        <input id="profileNameInput" type="text" class="w-full bg-white/10 border border-outline-variant/30 focus:border-nyaya-gold focus:ring-1 focus:ring-nyaya-gold text-white text-sm px-3 py-2 rounded focus:outline-none" value="" />
+      </div>
+      
+      <button onclick="saveProfileSettings()" class="w-full bg-nyaya-gold text-primary font-button py-2.5 rounded hover:bg-opacity-90 transition-all text-sm font-bold mt-2">
+        Save Changes
+      </button>
+      
+      <div class="border-t border-outline-variant/20 my-2"></div>
+      
+      <button onclick="clearAllChats()" class="w-full bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/30 font-button py-2 rounded transition-colors text-xs font-semibold">
+        Clear All Conversations
+      </button>
+    </div>
+  </div>
+</div>
+</main>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant flex justify-between px-6 py-3">
+<a onclick="showMyChats()" class="flex flex-col items-center text-nyaya-gold cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="text-xs font-medium mt-1">Chats</span>
+</a>
+<a onclick="loadRights()" class="flex flex-col items-center text-on-surface-variant cursor-pointer">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-xs font-medium mt-1">Rights</span>
+</a>
+</nav>
+<script>
+async function sendMessage() {
+  const textarea = document.querySelector("textarea");
+  const message = textarea.value.trim();
+
+  if (!message) return;
+
+  const currentChat = chats.find(c => c.id === activeChatId);
+  if (!currentChat) return;
+
+  // Clear welcome dashboard if present
+  const container = document.getElementById("chatContainer");
+  if (container.querySelector(".text-center")) {
+    container.innerHTML = "";
+  }
+
+  // Add user message to UI and state
+  addUserMessage(message);
+  currentChat.messages.push({ sender: "user", text: message });
+
+  // Auto-title chat on first message
+  if (currentChat.title === "New Chat" || currentChat.messages.length === 1) {
+    const cleanTitle = message.length > 25 ? message.substring(0, 25) + "..." : message;
+    currentChat.title = cleanTitle;
+    document.querySelector("header h1").innerText = cleanTitle;
+    renderSidebar();
+  }
+
+  saveToStorage();
+  textarea.value = "";
+  container.scrollTop = container.scrollHeight;
+
+  const typing = showTyping();
+
+  try {
+    const apiBase = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
+      ? 'http://127.0.0.1:8000'
+      : 'https://nyayadiary-backend.onrender.com';
+    const res = await fetch(`${apiBase}/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ query: message })
+    });
+
+    const data = await res.json();
+
+    if (typing && typing.parentNode) {
+      typing.remove();
+    }
+    
+    // Add AI message to state
+    currentChat.messages.push({ 
+      sender: "ai", 
+      text: data.response, 
+      sources: data.sources 
+    });
+    saveToStorage();
+
+    // Only update UI if we are still viewing this chat
+    if (currentChat.id === activeChatId) {
+      addAIMessage(data.response, data.sources);
+    }
+
+  } catch (err) {
+    if (typing && typing.parentNode) {
+      typing.remove();
+    }
+    
+    currentChat.messages.push({ sender: "ai", text: "⚠️ Server error", sources: [] });
+    saveToStorage();
+
+    if (currentChat.id === activeChatId) {
+      addAIMessage("⚠️ Server error", []);
+    }
+  }
+}
+
+// 👤 USER MESSAGE (uses YOUR design)
+function addUserMessage(text) {
+  const container = document.getElementById("chatContainer");
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "self-end max-w-3xl w-full flex justify-end";
+
+  wrapper.innerHTML = `
+    <div class="bg-primary-container text-on-primary p-4 rounded-xl rounded-tr-sm">
+      <p class="font-body-md text-body-md">${text}</p>
+    </div>
+  `;
+
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+}
+
+// 🤖 AI MESSAGE (kept clean, not breaking your UI)
+function addAIMessage(text, sources = []) {
+  const container = document.getElementById("chatContainer");
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "self-start max-w-3xl w-full flex gap-4";
+
+  // Parse markdown if marked library is loaded
+  const htmlContent = typeof marked !== 'undefined' ? marked.parse(text) : text.replace(/\n/g, '<br>');
+
+  let sourcesHtml = '';
+  if (sources && sources.length > 0) {
+    // Group pages by filename
+    const groupedSources = {};
+    sources.forEach(s => {
+      let filename = s.file;
+      if (filename.includes('/') || filename.includes('\\')) {
+        filename = filename.substring(Math.max(filename.lastIndexOf('/'), filename.lastIndexOf('\\')) + 1);
+      }
+      
+      if (!groupedSources[filename]) {
+        groupedSources[filename] = new Set();
+      }
+      groupedSources[filename].add(s.page);
+    });
+
+    const fileGroupList = Object.keys(groupedSources).map(filename => {
+      const pageList = Array.from(groupedSources[filename]).sort((a, b) => a - b);
+      const icon = filename.toLowerCase().includes('constitution') ? 'gavel' : 'description';
+      const pageLabel = pageList.length > 1 ? `pages: ${pageList.join(', ')}` : `p. ${pageList[0]}`;
+      return {
+        filename: filename,
+        icon: icon,
+        pageLabel: pageLabel
+      };
+    });
+
+    sourcesHtml = `
+      <div class="flex flex-wrap gap-2 mt-4">
+        ${fileGroupList.map(item => `
+          <span class="px-3 py-1 bg-surface-variant border border-outline-variant rounded text-xs font-medium text-on-surface-variant flex items-center gap-1.5 transition-all hover:bg-outline-variant/10">
+            <span class="material-symbols-outlined text-[14px] text-nyaya-gold">${item.icon}</span>
+            <span class="font-semibold">${item.filename}</span>
+            <span class="text-on-surface-variant/70">(${item.pageLabel})</span>
+          </span>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  wrapper.innerHTML = `
+    <div class="w-8 h-8 rounded-full bg-nyaya-gold flex items-center justify-center flex-shrink-0 text-primary">
+      <span class="material-symbols-outlined text-[18px]">account_balance</span>
+    </div>
+
+    <div class="flex flex-col gap-3 flex-1">
+      <div class="bg-surface border border-outline-variant rounded p-6 max-w-2xl text-on-background markdown-content">
+        <div class="text-sm leading-relaxed">${htmlContent}</div>
+        ${sourcesHtml}
+      </div>
+    </div>
+  `;
+
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+}
+
+// ⏳ typing
+function showTyping() {
+  const container = document.getElementById("chatContainer");
+
+  const div = document.createElement("div");
+  div.className = "text-on-surface-variant text-sm flex items-center gap-2 pl-12 py-2";
+  div.innerHTML = `
+    <span class="animate-pulse flex h-2 w-2 rounded-full bg-nyaya-gold"></span>
+    <span>AI is analyzing legal context...</span>
+  `;
+
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+
+  return div;
+}
+
+// --- Chat State & LocalStorage Manager ---
+
+const sampleAIHtml = `
+  <div class="self-start max-w-3xl w-full flex gap-4">
+    <div class="w-8 h-8 rounded-full bg-nyaya-gold flex items-center justify-center flex-shrink-0 text-primary">
+      <span class="material-symbols-outlined text-[18px]">account_balance</span>
+    </div>
+    <div class="flex flex-col gap-4 flex-1">
+      <!-- Summary Card -->
+      <div class="bg-surface border border-outline-variant rounded p-6">
+        <h3 class="font-h3 text-xl mb-2 text-on-background">Summary</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant">A 2-day verbal notice is generally invalid under the Karnataka Rent Control Act, 2001. A landlord must provide written notice, and the duration depends on the lease agreement (typically 1 month). You cannot be forcibly evicted without a court order.</p>
+      </div>
+      <!-- Law References -->
+      <div class="flex flex-wrap gap-2">
+        <span class="px-3 py-1 bg-surface-variant border border-outline-variant rounded text-sm font-medium text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">gavel</span>
+          Karnataka Rent Control Act, 2001
+        </span>
+        <span class="px-3 py-1 bg-surface-variant border border-outline-variant rounded text-sm font-medium text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">description</span>
+          Transfer of Property Act, 1882
+        </span>
+      </div>
+      <!-- What To Do -->
+      <div class="bg-surface border border-outline-variant rounded p-6">
+        <h3 class="font-h3 text-xl mb-4 text-on-background">Immediate Steps</h3>
+        <ol class="list-decimal list-inside space-y-3 font-body-md text-body-md text-on-surface-variant">
+          <li class="pl-2"><strong>Do not leave immediately.</strong> A verbal notice holds no legal weight.</li>
+          <li class="pl-2"><strong>Demand written notice.</strong> Request that the landlord communicate the eviction notice in writing, specifying the reason.</li>
+          <li class="pl-2"><strong>Review your lease.</strong> Check the termination clause in your rental agreement for the required notice period.</li>
+          <li class="pl-2"><strong>File a police complaint.</strong> If the landlord attempts physical force, locks you out, or cuts off essential utilities (water/electricity), go to the nearest police station immediately.</li>
+        </ol>
+      </div>
+      <!-- Disclaimer -->
+      <div class="bg-surface-container-low border-l-4 border-outline text-on-surface-variant p-4 text-sm mt-2">
+        <p class="font-body-md"><strong>Disclaimer:</strong> This information is for educational purposes and does not constitute formal legal advice. Consult a qualified advocate for specific guidance.</p>
+      </div>
+    </div>
+  </div>
+`;
+
+let chats = [];
+let activeChatId = "";
+let userProfileName = "Citizen Advocate";
+
+// Initialize App
+window.addEventListener("DOMContentLoaded", () => {
+  initApp();
+});
+
+function initApp() {
+  const storedChats = localStorage.getItem("nyayadiary_chats");
+  const storedActiveId = localStorage.getItem("nyayadiary_active_chat_id");
+  const storedName = localStorage.getItem("nyayadiary_profile_name");
+
+  if (storedName) {
+    userProfileName = storedName;
+  }
+  const nameSpan = document.getElementById("profileNameSpan");
+  if (nameSpan) nameSpan.innerText = userProfileName;
+
+  if (storedChats) {
+    chats = JSON.parse(storedChats);
+  } else {
+    // Populate with default sample chat
+    chats = [
+      {
+        id: "chat_default",
+        title: "Tenant Eviction Rights",
+        bookmarked: false,
+        messages: [
+          {
+            sender: "user",
+            text: "My landlord gave me a 2-day verbal notice to leave the apartment in Bangalore. What are my rights?"
+          },
+          {
+            sender: "ai",
+            text: "",
+            isSample: true
+          }
+        ]
+      }
+    ];
+  }
+
+  if (storedActiveId && chats.some(c => c.id === storedActiveId)) {
+    activeChatId = storedActiveId;
+  } else if (chats.length > 0) {
+    activeChatId = chats[0].id;
+  } else {
+    activeChatId = "chat_" + Date.now();
+    chats = [
+      {
+        id: activeChatId,
+        title: "New Chat",
+        bookmarked: false,
+        messages: []
+      }
+    ];
+  }
+
+  // Clean up any empty chats that might have been saved, except the active one
+  chats = chats.filter(c => c.messages.length > 0 || c.id === activeChatId);
+  saveToStorage();
+
+  renderSidebar();
+  
+  if (localStorage.getItem("nyayadiary_redirect_rights") === "true") {
+    localStorage.removeItem("nyayadiary_redirect_rights");
+    loadRights();
+  } else {
+    loadChat(activeChatId);
+  }
+}
+
+function saveToStorage() {
+  localStorage.setItem("nyayadiary_chats", JSON.stringify(chats));
+  localStorage.setItem("nyayadiary_active_chat_id", activeChatId);
+}
+
+function renderSidebar() {
+  const recentContainer = document.getElementById("recentChatsList");
+  const bookmarkContainer = document.getElementById("bookmarkedChatsList");
+  const bookmarkHeader = document.getElementById("bookmarkedChatsHeader");
+  
+  if (!recentContainer) return;
+  
+  recentContainer.innerHTML = "";
+  if (bookmarkContainer) bookmarkContainer.innerHTML = "";
+  
+  const bookmarkedChats = chats.filter(c => c.bookmarked);
+  const recentChats = chats.filter(c => !c.bookmarked);
+  
+  if (bookmarkHeader) {
+    if (bookmarkedChats.length > 0) {
+      bookmarkHeader.classList.remove("hidden");
+    } else {
+      bookmarkHeader.classList.add("hidden");
+    }
+  }
+  
+  const createChatItem = (chat) => {
+    const isActive = chat.id === activeChatId;
+    const activeClass = isActive 
+      ? "bg-white bg-opacity-10 text-on-primary font-medium" 
+      : "text-on-primary-container hover:bg-white hover:bg-opacity-5";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = `group flex items-center justify-between px-3 py-2 rounded transition-colors cursor-pointer text-sm ${activeClass}`;
+    wrapper.dataset.chatId = chat.id;
+
+    const actionButtons = `
+      <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button onclick="startRenameChat('${chat.id}', event)" class="text-on-primary-container hover:text-nyaya-gold p-0.5 rounded" title="Rename Chat">
+          <span class="material-symbols-outlined text-[16px] block">edit</span>
+        </button>
+        <button onclick="deleteChat('${chat.id}', event)" class="text-on-primary-container hover:text-red-400 p-0.5 rounded" title="Delete Chat">
+          <span class="material-symbols-outlined text-[16px] block">delete</span>
+        </button>
+      </div>
+    `;
+
+    wrapper.innerHTML = `
+      <span onclick="selectChat('${chat.id}')" class="truncate flex-1 flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] opacity-70">${chat.bookmarked ? 'bookmark' : 'chat_bubble'}</span>
+        <span class="chat-title-text truncate">${chat.title}</span>
+      </span>
+      ${actionButtons}
+    `;
+    return wrapper;
+  };
+
+  if (bookmarkContainer) {
+    bookmarkedChats.forEach(chat => {
+      bookmarkContainer.appendChild(createChatItem(chat));
+    });
+  }
+
+  recentChats.forEach(chat => {
+    recentContainer.appendChild(createChatItem(chat));
+  });
+}
+
+function startRenameChat(chatId, event) {
+  if (event) event.stopPropagation();
+  
+  const itemElement = document.querySelector(`[data-chat-id="${chatId}"]`);
+  if (!itemElement) return;
+  
+  const titleSpan = itemElement.querySelector(".chat-title-text");
+  if (!titleSpan) return;
+  
+  const chat = chats.find(c => c.id === chatId);
+  if (!chat) return;
+  
+  const currentTitle = chat.title;
+  titleSpan.innerHTML = `
+    <input type="text" class="bg-white/10 text-white text-xs px-2 py-0.5 rounded focus:outline-none focus:ring-1 focus:ring-nyaya-gold w-full max-w-[120px]" value="${escapeHtml(currentTitle)}" />
+  `;
+  
+  const input = titleSpan.querySelector("input");
+  input.focus();
+  input.select();
+  
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  
+  input.addEventListener("click", (e) => e.stopPropagation());
+  
+  let finished = false;
+  const saveRename = () => {
+    if (finished) return;
+    finished = true;
+    const newTitle = input.value.trim();
+    if (newTitle && newTitle !== currentTitle) {
+      chat.title = newTitle;
+      saveToStorage();
+      
+      if (chat.id === activeChatId) {
+        document.querySelector("header h1").innerText = newTitle;
+      }
+      showToast("Chat renamed successfully!");
+    }
+    renderSidebar();
+  };
+  
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      saveRename();
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      finished = true;
+      renderSidebar();
+    }
+  });
+  
+  input.addEventListener("blur", () => {
+    saveRename();
+  });
+}
+
+function selectChat(chatId) {
+  window.speechSynthesis.cancel();
+  
+  // Clean up any empty chats when switching away, except the target chat
+  chats = chats.filter(c => c.messages.length > 0 || c.id === chatId);
+  
+  activeChatId = chatId;
+  saveToStorage();
+  renderSidebar();
+  loadChat(chatId);
+  setActiveLink('mychats');
+  toggleMobileSidebar(false); // close mobile drawer
+}
+
+function loadChat(chatId) {
+  const container = document.getElementById("chatContainer");
+  const inputArea = document.getElementById("chatInputArea");
+  if (inputArea) inputArea.style.display = "block";
+
+  const headerActions = document.getElementById("headerActions");
+  if (headerActions) headerActions.style.display = "flex";
+
+  const chat = chats.find(c => c.id === chatId);
+  if (!chat) return;
+
+  // Set header title
+  document.querySelector("header h1").innerText = chat.title;
+
+  // Set bookmark button state
+  const bookmarkIcon = document.querySelector("#headerActions button[onclick^='toggleBookmark'] span");
+  if (bookmarkIcon) {
+    if (chat.bookmarked) {
+      bookmarkIcon.innerText = "bookmark";
+      bookmarkIcon.style.fontVariationSettings = "'FILL' 1";
+      bookmarkIcon.classList.add("text-nyaya-gold");
+    } else {
+      bookmarkIcon.innerText = "bookmark_border";
+      bookmarkIcon.style.fontVariationSettings = "'FILL' 0";
+      bookmarkIcon.classList.remove("text-nyaya-gold");
+    }
+  }
+
+  if (chat.messages.length === 0) {
+    // Welcome Dashboard
+    container.innerHTML = `
+      <div class="flex-1 flex flex-col items-center justify-center text-center p-8 max-w-lg mx-auto my-auto animate-fadeIn">
+        <span class="material-symbols-outlined text-[64px] text-nyaya-gold mb-4 animate-pulse">gavel</span>
+        <h2 class="font-h2 text-2xl text-on-background mb-2">Welcome to NyayaDiary</h2>
+        <p class="font-body-md text-on-surface-variant text-sm mb-6">Your personal AI legal assistant. Ask questions about the Indian Constitution, civil liberties, local regulations, or procedural guides.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full text-left">
+          <button onclick="usePrompt('What are my fundamental rights?')" class="p-3 bg-surface border border-outline-variant hover:border-nyaya-gold rounded text-xs font-medium text-on-surface-variant hover:text-primary transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] text-nyaya-gold">account_balance</span>
+            Fundamental Rights
+          </button>
+          <button onclick="usePrompt('How do I file an FIR online?')" class="p-3 bg-surface border border-outline-variant hover:border-nyaya-gold rounded text-xs font-medium text-on-surface-variant hover:text-primary transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] text-nyaya-gold">description</span>
+            Filing an FIR
+          </button>
+        </div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = "";
+    chat.messages.forEach(msg => {
+      if (msg.sender === "user") {
+        addUserMessage(msg.text);
+      } else {
+        if (msg.isSample) {
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = sampleAIHtml;
+          container.appendChild(wrapper.firstElementChild);
+        } else {
+          addAIMessage(msg.text, msg.sources || []);
+        }
+      }
+    });
+    container.scrollTop = container.scrollHeight;
+  }
+}
+
+function startNewChat() {
+  window.speechSynthesis.cancel();
+  
+  // If we are already on an empty chat, just stay there
+  const currentChat = chats.find(c => c.id === activeChatId);
+  if (currentChat && currentChat.messages.length === 0) {
+    loadChat(activeChatId);
+    toggleMobileSidebar(false); // close mobile drawer
+    return;
+  }
+
+  // Clean up any other empty chats before creating a new one
+  chats = chats.filter(c => c.messages.length > 0);
+
+  const newId = "chat_" + Date.now();
+  const newChat = {
+    id: newId,
+    title: "New Chat",
+    bookmarked: false,
+    messages: []
+  };
+
+  chats.unshift(newChat);
+  activeChatId = newId;
+  saveToStorage();
+
+  renderSidebar();
+  loadChat(newId);
+  setActiveLink('mychats');
+  toggleMobileSidebar(false); // close mobile drawer
+  showToast("Started new chat window!");
+}
+
+function deleteChat(chatId, event) {
+  if (event) event.stopPropagation();
+  window.speechSynthesis.cancel();
+
+  const index = chats.findIndex(c => c.id === chatId);
+  if (index === -1) return;
+
+  chats.splice(index, 1);
+
+  if (chats.length === 0) {
+    chats = [
+      {
+        id: "chat_default",
+        title: "New Chat",
+        bookmarked: false,
+        messages: []
+      }
+    ];
+    activeChatId = chats[0].id;
+  } else if (activeChatId === chatId) {
+    activeChatId = chats[0].id;
+  }
+
+  saveToStorage();
+  renderSidebar();
+  loadChat(activeChatId);
+  showToast("Chat deleted.");
+}
+
+function showMyChats() {
+  window.speechSynthesis.cancel();
+  if (chats.length > 0) {
+    if (!chats.some(c => c.id === activeChatId)) {
+      activeChatId = chats[0].id;
+    }
+    selectChat(activeChatId);
+  } else {
+    startNewChat();
+  }
+}
+
+function usePrompt(text) {
+  const container = document.getElementById("chatContainer");
+  if (container.querySelector(".text-center")) {
+    container.innerHTML = "";
+  }
+  const textarea = document.querySelector("textarea");
+  textarea.value = text;
+  sendMessage();
+}
+
+// --- Menu Navigation Highlighting ---
+
+function setActiveLink(activeId) {
+  const myChatsLink = document.getElementById("navMyChats");
+  const knowYourRightsLink = document.getElementById("navRights");
+  
+  if (!myChatsLink || !knowYourRightsLink) return;
+  
+  if (activeId === 'mychats') {
+    myChatsLink.className = "flex items-center gap-3 p-3 rounded bg-white bg-opacity-10 text-on-primary border-l-4 border-nyaya-gold cursor-pointer";
+    knowYourRightsLink.className = "flex items-center gap-3 p-3 rounded text-on-primary-container hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer";
+  } else if (activeId === 'rights') {
+    myChatsLink.className = "flex items-center gap-3 p-3 rounded text-on-primary-container hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer";
+    knowYourRightsLink.className = "flex items-center gap-3 p-3 rounded bg-white bg-opacity-10 text-on-primary border-l-4 border-nyaya-gold cursor-pointer";
+  } else {
+    myChatsLink.className = "flex items-center gap-3 p-3 rounded text-on-primary-container hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer";
+    knowYourRightsLink.className = "flex items-center gap-3 p-3 rounded text-on-primary-container hover:bg-white hover:bg-opacity-5 transition-colors cursor-pointer";
+  }
+}
+
+// --- Know Your Rights Catalog (58 Rights) ---
+
+const rightsList = [
+  {
+    icon: "gavel",
+    title: "Right to Equality",
+    source: "Articles 14-18, Constitution of India",
+    desc: "All citizens are equal before the law. The government cannot discriminate against any citizen on grounds of religion, race, caste, sex, or place of birth. It ensures equality of opportunity in matters of public employment and abolishes untouchability.",
+    speech: "Right to Equality. Under Articles 14 to 18 of the Constitution of India, all citizens are equal before the law. The government cannot discriminate against any citizen on grounds of religion, race, caste, sex, or place of birth."
+  },
+  {
+    icon: "record_voice_over",
+    title: "Freedom of Speech",
+    source: "Article 19(1)(a), Constitution of India",
+    desc: "All citizens have the right to freedom of speech and expression. This includes the freedom to express your views, write, print, paint, or communicate via any other medium, subject to reasonable restrictions like national security or public order.",
+    speech: "Freedom of Speech. Under Article 19, section 1, clause a of the Constitution of India, all citizens have the right to freedom of speech and expression."
+  },
+  {
+    icon: "shield",
+    title: "Right to Life & Liberty",
+    source: "Article 21, Constitution of India",
+    desc: "No person shall be deprived of their life or personal liberty except according to procedure established by law. Courts have expanded this to include the right to live with human dignity, the right to privacy, clean water, pollution-free air, and shelter.",
+    speech: "Right to Life and Liberty. Under Article 21 of the Constitution of India, no person shall be deprived of their life or personal liberty except according to procedure established by law."
+  },
+  {
+    icon: "balance",
+    title: "Free Legal Aid",
+    source: "Article 39A, Constitution of India",
+    desc: "The State shall secure that the operation of the legal system promotes justice on a basis of equal opportunity. Specifically, the government must provide free legal aid by suitable legislation or schemes to ensure that justice is not denied due to financial disabilities.",
+    speech: "Free Legal Aid. Under Article 39A of the Constitution of India, the government must provide free legal aid through suitable schemes to ensure that justice is not denied to any citizen due to financial or other disabilities."
+  },
+  {
+    icon: "lock_open",
+    title: "Rights Against Arbitrary Arrest",
+    source: "Article 22 & Section 50 of CrPC",
+    desc: "Any person arrested has the right to be informed of the grounds of arrest, the right to consult a lawyer of their choice, and must be produced before a magistrate within 24 hours of arrest. Women cannot be arrested before sunrise or after sunset without a special magistrate order.",
+    speech: "Rights Against Arbitrary Arrest. Under Article 22 of the Constitution and Section 50 of the Code of Criminal Procedure, any arrested person has the right to know the reasons for arrest, consult a lawyer, and be presented before a magistrate within 24 hours."
+  },
+  {
+    icon: "shopping_cart",
+    title: "Consumer Protections",
+    source: "Consumer Protection Act, 2019",
+    desc: "Consumers have the right to be protected against unfair trade practices, the right to be informed about quality, quantity, potency, purity, standard and price of goods or services, and the right to seek redressal against unfair exploitation.",
+    speech: "Consumer Protections. Under the Consumer Protection Act of 2019, consumers have the right to be protected against unfair trade practices, the right to be informed about the quality, standard, and price of goods or services, and the right to seek redressal."
+  },
+  {
+    icon: "school",
+    title: "Right to Education",
+    source: "Article 21A, Constitution of India",
+    desc: "The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine. It makes basic education a fundamental right for every child in the country.",
+    speech: "Right to Education. Under Article 21A of the Constitution of India, the State must provide free and compulsory education to all children of the age of six to fourteen years, making basic education a fundamental right for every child."
+  },
+  {
+    icon: "support_agent",
+    title: "Workplace & Maternity Rights",
+    source: "POSH Act & Maternity Benefit Act",
+    desc: "Women are protected against sexual harassment at the workplace under the POSH Act, ensuring a safe work environment. Additionally, the Maternity Benefit Act guarantees 26 weeks of paid maternity leave, protecting women's employment during motherhood.",
+    speech: "Workplace and Maternity Rights. Under the POSH Act and the Maternity Benefit Act, women are guaranteed a safe working environment free from sexual harassment, as well as 26 weeks of paid maternity leave to protect their employment during motherhood."
+  },
+  {
+    icon: "visibility_off",
+    title: "Right to Privacy",
+    source: "Article 21 (Puttaswamy Judgment)",
+    desc: "The Supreme Court declared the Right to Privacy as an integral part of the Right to Life and Personal Liberty. It protects citizens against unauthorized state surveillance, protects personal data, and guarantees autonomy over personal choices.",
+    speech: "Right to Privacy. The Supreme Court of India has declared privacy to be a fundamental right under Article 21, protecting your personal data, home, and autonomous choices from arbitrary interference."
+  },
+  {
+    icon: "info",
+    title: "Right to Information",
+    source: "RTI Act, 2005",
+    desc: "Every citizen has the right to secure access to information under the control of public authorities, promoting transparency and accountability in the working of every public institution.",
+    speech: "Right to Information. Under the RTI Act of 2005, every citizen has the legal right to request information from government departments to hold them accountable."
+  },
+  {
+    icon: "forest",
+    title: "Clean Environment",
+    source: "Article 21 & Article 48A",
+    desc: "The right to life includes the right to enjoy pollution-free water and air. The State is constitutionally mandated to protect and improve the environment, forests, and wildlife of the country.",
+    speech: "Clean Environment. The right to live under Article 21 includes the right to a clean and safe environment, including pollution-free air and clean drinking water."
+  },
+  {
+    icon: "front_hand",
+    title: "Right Against Exploitation",
+    source: "Articles 23-24, Constitution of India",
+    desc: "Traffic in human beings and begging or other similar forms of forced labor are strictly prohibited. Additionally, no child below the age of fourteen years shall be employed to work in any factory, mine, or other hazardous employment.",
+    speech: "Right Against Exploitation. Under Articles 23 and 24, human trafficking, forced labor, and child labor under the age of 14 in hazardous industries are strictly prohibited."
+  },
+  {
+    icon: "payments",
+    title: "Equal Pay for Equal Work",
+    source: "Article 39(d), Constitution of India",
+    desc: "The State is directed to ensure that there is equal pay for equal work for both men and women. Discrimination in salary or wages based purely on gender for similar work is unconstitutional.",
+    speech: "Equal Pay for Equal Work. Under Article 39, clause d, the state directs that men and women performing the same work must receive equal pay without gender discrimination."
+  },
+  {
+    icon: "church",
+    title: "Freedom of Religion",
+    source: "Articles 25-28, Constitution of India",
+    desc: "All persons are equally entitled to freedom of conscience and the right to freely profess, practice, and propagate their religion, subject to public order, morality, and health.",
+    speech: "Freedom of Religion. Under Articles 25 to 28, all citizens have the fundamental right to practice, profess, and propagate the religion of their choice."
+  },
+  {
+    icon: "account_balance",
+    title: "Constitutional Remedies",
+    source: "Article 32, Constitution of India",
+    desc: "If any of your fundamental rights are violated, you have the right to move the Supreme Court directly to seek enforcement. Dr. Ambedkar called Article 32 the 'heart and soul' of the Constitution.",
+    speech: "Constitutional Remedies. Article 32 gives you the fundamental right to approach the Supreme Court directly if your basic rights are violated."
+  },
+  {
+    icon: "female",
+    title: "Night Arrest Protections",
+    source: "Section 46(4), CrPC",
+    desc: "Except in exceptional circumstances and with prior written permission of a Judicial Magistrate of the first class, no woman shall be arrested after sunset and before sunrise.",
+    speech: "Night Arrest Protections for Women. Under Section 46, clause 4 of the Code of Criminal Procedure, women cannot be arrested after sunset or before sunrise without a special magistrate order."
+  },
+  {
+    icon: "family_restroom",
+    title: "Maintenance for Parents",
+    source: "Senior Citizens Act, 2007",
+    desc: "Children and heirs have a legal obligation to provide monthly maintenance and basic amenities to their elderly parents or grandparents if they are unable to maintain themselves.",
+    speech: "Maintenance for Parents. The Senior Citizens Act of 2007 makes it a legal duty for children and heirs to maintain and support their dependent parents and grandparents."
+  },
+  {
+    icon: "edit_document",
+    title: "Right to File an FIR",
+    source: "Section 154, CrPC",
+    desc: "If you disclose information about a cognizable offense, the police officer in charge must register a First Information Report (FIR). If they refuse, you can send it to the Superintendent of Police or file it at any station as a 'Zero FIR'.",
+    speech: "Right to File an FIR. Under Section 154 of the Code of Criminal Procedure, the police must register an FIR for serious offenses. If they refuse, you can file a Zero FIR at any police station."
+  },
+  {
+    icon: "assignment_ind",
+    title: "Right to Legal Defense",
+    source: "Article 22(1), Constitution of India",
+    desc: "No person who is arrested shall be detained in custody without being informed of the grounds for such arrest, nor shall he be denied the right to consult and be defended by a legal practitioner of his choice.",
+    speech: "Right to Legal Defense. Under Article 22, clause 1, you have the constitutional right to consult and be defended by a lawyer of your own choice when arrested."
+  },
+  {
+    icon: "child_care",
+    title: "Protection of Child Rights",
+    source: "POCSO Act & Child Rights Commission",
+    desc: "Children are protected against sexual exploitation, abuse, and trafficking. The POCSO Act provides a child-friendly court mechanism to protect child victims and ensure speedy trials.",
+    speech: "Protection of Child Rights. The POCSO Act protects children under 18 from abuse and harassment, and ensures child-friendly legal procedures."
+  },
+  {
+    icon: "work",
+    title: "Right to Minimum Wages",
+    source: "Minimum Wages Act, 1948",
+    desc: "Workers in scheduled employments have a statutory right to receive minimum wages set by the government, protecting them against exploitative sweatshop labor practices.",
+    speech: "Right to Minimum Wages. The Minimum Wages Act guarantees that workers must be paid at least the minimum salary rates set by the government."
+  },
+  {
+    icon: "home_work",
+    title: "Arbitrary Eviction Protection",
+    source: "State Rent Control Laws",
+    desc: "Tenants cannot be arbitrarily evicted by landlords. Eviction requires a valid legal ground (like non-payment of rent) and must follow the legal process, starting with a written notice and court order.",
+    speech: "Arbitrary Eviction Protection. Tenants are protected by Rent Control laws and cannot be evicted by force. Landlords must give written notice and secure a court decree."
+  },
+  {
+    icon: "water_drop",
+    title: "Clean Drinking Water",
+    source: "Article 21, Judicial Precedents",
+    desc: "The right to clean drinking water is part of the right to life under Article 21. The state has a duty to provide safe, drinkable water to all citizens to maintain public health.",
+    speech: "Clean Drinking Water. The courts have ruled that access to clean and safe drinking water is a fundamental right under the Right to Life."
+  },
+  {
+    icon: "holiday_village",
+    title: "Right to Shelter",
+    source: "Article 21, Judicial Precedents",
+    desc: "The right to life does not mean animal existence. It includes the right to live with human dignity, which includes having a decent shelter or home to reside in.",
+    speech: "Right to Shelter. Under Article 21, having a safe place to live and shelter is recognized as an essential component of living with human dignity."
+  },
+  {
+    icon: "medical_services",
+    title: "Health & Medical Care",
+    source: "Article 21 & Supreme Court rulings",
+    desc: "The state has a constitutional obligation to preserve life. Government hospitals and medical practitioners are legally bound to provide immediate emergency medical aid to save a patient's life.",
+    speech: "Health and Medical Care. Rulings under Article 21 state that all government and private hospitals must provide emergency medical treatment immediately to preserve human life."
+  },
+  {
+    icon: "how_to_vote",
+    title: "Right to Vote",
+    source: "Article 326, Constitution of India",
+    desc: "Every citizen who is not less than eighteen years of age has a constitutional right to register and vote in elections, on the basis of adult suffrage.",
+    speech: "Right to Vote. Under Article 326 of the Constitution, every adult citizen over the age of 18 has the constitutional right to vote in democratic elections."
+  },
+  {
+    icon: "domain",
+    title: "Right to Property",
+    source: "Article 300A, Constitution of India",
+    desc: "Though no longer a fundamental right, the right to property is a constitutional right. No person shall be deprived of his property save by authority of law and with fair compensation.",
+    speech: "Right to Property. Under Article 300A, the state cannot seize your private property without passing a specific law and providing fair compensation."
+  },
+  {
+    icon: "speaker_notes_off",
+    title: "Right against Self-Incrimination",
+    source: "Article 20(3), Constitution of India",
+    desc: "No person accused of any offense shall be compelled to be a witness against himself. Confessions made under police coercion or torture are not admissible as evidence in court.",
+    speech: "Right against Self-Incrimination. Under Article 20, clause 3, you cannot be forced to confess or give evidence against yourself in a criminal investigation."
+  },
+  {
+    icon: "speed",
+    title: "Right to a Speedy Trial",
+    source: "Article 21, Judicial Precedents",
+    desc: "Justice delayed is justice denied. Undersentenced prisoners or accused persons have a fundamental right to a speedy public trial to determine their guilt or innocence.",
+    speech: "Right to a Speedy Trial. Under Article 21, you have a right to a fast and fair trial to avoid prolonged, unjust detention without conviction."
+  },
+  {
+    icon: "history",
+    title: "Against Double Jeopardy",
+    source: "Article 20(2), Constitution of India",
+    desc: "No person shall be prosecuted and punished for the same offense more than once. Once you are tried and convicted or acquitted, you cannot be tried again for the same crime.",
+    speech: "Right against Double Jeopardy. Under Article 20, clause 2, you cannot be prosecuted, tried, or punished twice for the exact same offense."
+  },
+  {
+    icon: "assignment_turned_in",
+    title: "Right to Default Bail",
+    source: "Section 167(2), CrPC",
+    desc: "If the police fail to file a chargesheet within 60 days (for minor offenses) or 90 days (for serious offenses) after arrest, the accused has an absolute right to be released on default bail.",
+    speech: "Right to Default Bail. Under Section 167, clause 2 of the Criminal Procedure Code, you are entitled to default bail if the police fail to file a charge sheet within 60 or 90 days."
+  },
+  {
+    icon: "storefront",
+    title: "Right of Street Vendors",
+    source: "Street Vendors Act, 2014",
+    desc: "Street vendors have a statutory right to carry on their livelihood in designated vending zones without arbitrary eviction or harassment by police or local municipal authorities.",
+    speech: "Right of Street Vendors. The Street Vendors Act of 2014 protects registered street vendors from harassment and guarantees them designated areas to run their business."
+  },
+  {
+    icon: "accessible",
+    title: "Rights of Disabled Persons",
+    source: "RPwD Act, 2016",
+    desc: "Persons with benchmark disabilities are guaranteed equal opportunity, non-discrimination, reservations in higher education and government jobs, and barrier-free access to public spaces.",
+    speech: "Rights of Persons with Disabilities. The Disabilities Act of 2016 guarantees equal employment opportunities, reservations, and barrier-free access in public buildings."
+  },
+  {
+    icon: "wifi",
+    title: "Right to Internet Access",
+    source: "Article 19(1)(a) & Anuradha Bhasin case",
+    desc: "The Supreme Court recognized access to the internet as a fundamental right under Freedom of Speech and Expression. The government cannot suspend internet services indefinitely without reasonable grounds.",
+    speech: "Right to Internet. The Supreme Court has recognized access to the internet as a fundamental right under Article 19, clause 1, clause a, protecting freedom of expression and trade."
+  },
+  {
+    icon: "favorite",
+    title: "Right to Choose Life Partner",
+    source: "Article 21 (Hadiya Case)",
+    desc: "Every adult has the fundamental right to choose their life partner and marry whoever they want, regardless of caste, religion, or creed, without any unlawful interference from the state or family.",
+    speech: "Right to Choose a Life Partner. Under Article 21, the Supreme Court has ruled that every adult has the fundamental right to marry a person of their choice."
+  },
+  {
+    icon: "lock",
+    title: "Protection against Handcuffing",
+    source: "Prem Shankar Shukla v. Delhi Administration",
+    desc: "Handcuffing should not be done routinely. The police cannot handcuff an accused unless there is a clear, documented risk of escape or violence, as it violates human dignity under Article 21.",
+    speech: "Protection against Handcuffing. The Supreme Court has ruled that routine handcuffing is illegal and violates human dignity under Article 21 unless a clear risk of escape exists."
+  },
+  {
+    icon: "workspace_premium",
+    title: "Right to Reputation",
+    source: "Article 21 & Supreme Court rulings",
+    desc: "A person's reputation is an essential element of their personal security and is protected under the Right to Life. No one can defame you without facing civil or criminal liability.",
+    speech: "Right to Reputation. The courts have held that a person's reputation is a fundamental part of the Right to Life under Article 21."
+  },
+  {
+    icon: "healing",
+    title: "Against Custodial Torture",
+    source: "Article 21 & D.K. Basu Guidelines",
+    desc: "Custodial violence, torture, or death in police custody is a gross violation of fundamental rights. The police must strictly adhere to the D.K. Basu guidelines to protect detainees from torture.",
+    speech: "Right Against Custodial Torture. Under Article 21 and the D.K. Basu guidelines, police torture or violence against any person in custody is strictly illegal."
+  },
+  {
+    icon: "transgender",
+    title: "Transgender Equality",
+    source: "NALSA Judgment & Transgender Act, 2019",
+    desc: "Transgender persons have the right to self-determine their gender identity. They are protected against discrimination in education, employment, healthcare, and public facilities.",
+    speech: "Transgender Equality. Under the NALSA judgment and the Transgender Act of 2019, transgender persons are guaranteed equal protection, gender identity choice, and non-discrimination."
+  },
+  {
+    icon: "home",
+    title: "Domestic Violence Protections",
+    source: "Protection of Women from DV Act, 2005",
+    desc: "Women are protected against physical, emotional, sexual, and economic abuse within a domestic relationship. They have the right to obtain protection orders and residency orders to secure their home.",
+    speech: "Domestic Violence Protections. The Domestic Violence Act of 2005 protects women from physical, emotional, and economic abuse, granting them rights to protection and residence orders."
+  },
+  {
+    icon: "groups",
+    title: "Equal Inheritance for Daughters",
+    source: "Hindu Succession (Amendment) Act, 2005",
+    desc: "Daughters have equal coparcenary rights in Hindu ancestral property by birth, placing them on equal footing with sons in inheritance, partition, and property management.",
+    speech: "Equal Inheritance for Daughters. The Hindu Succession Amendment Act of 2005 gives daughters equal coparcenary rights in ancestral property by birth, equal to sons."
+  },
+  {
+    icon: "info",
+    title: "Voter's Right to Information",
+    source: "Article 19(1)(a) & SC rulings",
+    desc: "Voters have the right to know the educational qualifications, criminal history, and assets/liabilities of candidates contesting public elections to make an informed choice.",
+    speech: "Voter's Right to Information. The Supreme Court has ruled that voters have the right to know the credentials, assets, and criminal record of election candidates."
+  },
+  {
+    icon: "bedtime",
+    title: "Right to Sleep",
+    source: "Article 21 (Ramlila Maidan Case)",
+    desc: "The Supreme Court recognized the right to sleep as a fundamental right under Article 21, as it is essential for human health, mental peace, and a dignified life.",
+    speech: "Right to Sleep. The Supreme Court has declared that the right to sleep is a fundamental right under Article 21, essential for human health and dignity."
+  },
+  {
+    icon: "volunteer_activism",
+    title: "Decent Burial & Cremation",
+    source: "Article 21, Judicial Precedents",
+    desc: "The Right to Life extends beyond death. Every deceased person is entitled to a decent and dignified burial or cremation according to their religious rites and customs.",
+    speech: "Right to a Decent Burial and Cremation. Under Article 21, every deceased person has the right to a dignified final rite and disposal of their body."
+  },
+  {
+    icon: "drafts",
+    title: "Free Copy of FIR",
+    source: "Section 207 of CrPC",
+    desc: "An accused person has a statutory right to receive a copy of the First Information Report (FIR) and other police reports free of cost to prepare their legal defense.",
+    speech: "Right to Free FIR Copy. Under Section 207 of the Criminal Procedure Code, the accused is legally entitled to a copy of the FIR free of cost."
+  },
+  {
+    icon: "medical_services",
+    title: "Medical Examination on Arrest",
+    source: "Section 54 of CrPC",
+    desc: "An arrested person has the right to be medically examined by a registered medical practitioner. This ensures a record of physical condition is kept to check against custodial abuse.",
+    speech: "Right to Medical Examination. Under Section 54 of the Criminal Procedure Code, any arrested person can demand a medical examination to record their physical state and protect against torture."
+  },
+  {
+    icon: "pregnant_woman",
+    title: "Maternal Rights in Prisons",
+    source: "Article 21 & SC Guidelines",
+    desc: "Pregnant inmates are entitled to specialized prenatal and postnatal medical care, nutritious diet, and the right to give birth in a humane environment outside the prison cells.",
+    speech: "Maternal Rights in Prisons. The Supreme Court has ruled that pregnant inmates must be provided proper medical care, diet, and a clean environment to ensure safe childbirth."
+  },
+  {
+    icon: "female",
+    title: "Gender-Sensitive Search",
+    source: "Section 51(2) of CrPC",
+    desc: "Whenever it is necessary to search a female, the search must be made by another female officer with strict regard to decency. A male officer cannot conduct a physical search on a female.",
+    speech: "Gender-Sensitive Search. Under Section 51, clause 2 of the Code of Criminal Procedure, a female suspect must only be physically searched by a female officer with strict decency."
+  },
+  {
+    icon: "payments",
+    title: "Victim Compensation Scheme",
+    source: "Section 357A of CrPC",
+    desc: "Victims of crimes or their dependents have the right to receive financial compensation from the government for rehabilitation, medical expenses, and loss of livelihood.",
+    speech: "Victim Compensation Scheme. Section 357A of the Criminal Procedure Code guarantees the right of crime victims to obtain financial compensation from state funds."
+  },
+  {
+    icon: "traffic",
+    title: "Clean Streets & Public Roads",
+    source: "Article 21 & Municipal Duty",
+    desc: "Citizens have the right to clean streets, proper garbage disposal, and motorable roads. Municipal bodies are legally bound to maintain public paths to ensure citizen safety.",
+    speech: "Right to Clean Streets and Roads. The courts have held that maintaining clean public streets and motorable roads is a fundamental municipal duty under the right to health."
+  },
+  {
+    icon: "notifications",
+    title: "Detention Notification Right",
+    source: "Section 50A of CrPC",
+    desc: "The police officer making an arrest must immediately inform a friend, relative, or nominated person of the arrested individual about the arrest and the location where they are held.",
+    speech: "Detention Notification Right. Under Section 50A of the Criminal Procedure Code, the police are legally required to inform a relative or friend of the arrested person immediately."
+  },
+  {
+    icon: "diversity_3",
+    title: "Right to Peaceful Assembly",
+    source: "Article 19(1)(b), Constitution of India",
+    desc: "All citizens have the right to assemble peaceably and without arms to protest, hold meetings, or conduct rallies, subject to reasonable restrictions like public order.",
+    speech: "Right to Peaceful Assembly. Under Article 19, clause 1, clause b of the Constitution, citizens have the right to assemble peacefully and without weapons."
+  },
+  {
+    icon: "handshake",
+    title: "Form Associations & Unions",
+    source: "Article 19(1)(c), Constitution of India",
+    desc: "Citizens have the fundamental right to form associations, unions, co-operative societies, or political parties to protect their collective interests and advance social goals.",
+    speech: "Right to Form Associations. Under Article 19, clause 1, clause c, citizens are guaranteed the right to form political parties, unions, or co-operative societies."
+  },
+  {
+    icon: "directions_run",
+    title: "Right to Free Movement",
+    source: "Article 19(1)(d), Constitution of India",
+    desc: "All citizens have the right to move freely throughout the territory of India, subject to reasonable restrictions in the interest of the general public or protection of tribal areas.",
+    speech: "Right to Free Movement. Article 19, clause 1, clause d guarantees all Indian citizens the right to travel and move freely across any state within India."
+  },
+  {
+    icon: "home",
+    title: "Right to Reside and Settle",
+    source: "Article 19(1)(e), Constitution of India",
+    desc: "Every citizen has the right to reside and settle in any part of the territory of India. This guarantees that citizens cannot be barred from living in other states, subject to local tribal protections.",
+    speech: "Right to Reside and Settle. Article 19, clause 1, clause e protects the right of every citizen to live, reside, and buy shelter in any state of India."
+  },
+  {
+    icon: "business_center",
+    title: "Practice Trade or Profession",
+    source: "Article 19(1)(g), Constitution of India",
+    desc: "All citizens have the right to practice any profession, or to carry on any occupation, trade or business, subject to professional qualifications or state monopoly regulations.",
+    speech: "Right to Practice Trade or Profession. Article 19, clause 1, clause g guarantees the right of citizens to carry on any business, trade, or profession of their choice."
+  },
+  {
+    icon: "contact_page",
+    title: "Consult Lawyer During Inquiry",
+    source: "Section 41D of CrPC",
+    desc: "An arrested person is entitled to meet an advocate of their choice during the course of interrogation, though not throughout the entire interrogation process.",
+    speech: "Right to Consult Lawyer. Under Section 41D of the Criminal Procedure Code, an arrested person has the right to meet their attorney during interrogation."
+  },
+  {
+    icon: "child_friendly",
+    title: "Maternity Benefits for All",
+    source: "National Food Security Act & Art 21",
+    desc: "Pregnant women and lactating mothers, including those in the unorganized sector, are entitled to free meals and maternity cash benefits to support their nutrition and health.",
+    speech: "Maternity Benefits for All. Under the National Food Security Act, pregnant women in the unorganized sector are entitled to maternity cash benefits and nutritional support."
+  }
+];
+
+function loadRights() {
+  window.speechSynthesis.cancel();
+  
+  // Clean up any empty chats when navigating to the rights section
+  chats = chats.filter(c => c.messages.length > 0);
+  if (chats.length === 0) {
+    activeChatId = "chat_" + Date.now();
+    chats = [
+      {
+        id: activeChatId,
+        title: "New Chat",
+        bookmarked: false,
+        messages: []
+      }
+    ];
+  }
+  saveToStorage();
+  renderSidebar();
+  toggleMobileSidebar(false); // close mobile sidebar
+
+  const container = document.getElementById("chatContainer");
+  
+  const cardsHtml = rightsList.map((right, index) => {
+    return `
+      <!-- Card ${index + 1} -->
+      <div class="bg-surface border border-outline-variant rounded p-6 flex flex-col justify-between hover:shadow-md transition-all">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-nyaya-gold">${right.icon}</span>
+            <h3 class="font-h3 text-lg text-on-background">${right.title}</h3>
+          </div>
+          <p class="font-label-caps text-xs text-on-surface-variant uppercase tracking-wider mb-2">${right.source}</p>
+          <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+            ${right.desc}
+          </p>
+        </div>
+        <button onclick="speakRight('${right.speech.replace(/'/g, "\\'")}', this)" class="speech-btn mt-4 self-start px-3 py-1.5 bg-nyaya-gold/10 hover:bg-nyaya-gold/20 text-primary border border-nyaya-gold rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors">
+          <span class="material-symbols-outlined text-[16px]">volume_up</span>
+          <span>Listen</span>
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="max-w-4xl mx-auto py-6">
+      <div class="mb-8">
+        <h2 class="font-h2 text-3xl text-on-background mb-2">Know Your Rights</h2>
+        <p class="font-body-md text-on-surface-variant text-sm">Every Indian citizen is protected by key constitutional and statutory rights. Explore common legal protections below and click "Listen" to have them read aloud.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
+        ${cardsHtml}
+      </div>
+    </div>
+  `;
+  
+  document.querySelector("header h1").innerText = "Know Your Rights";
+  setActiveLink('rights');
+  const inputArea = document.getElementById("chatInputArea");
+  if (inputArea) inputArea.style.display = "none";
+  const headerActions = document.getElementById("headerActions");
+  if (headerActions) headerActions.style.display = "none";
+}
+
+let currentUtterance = null;
+function speakRight(text, button) {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    if (currentUtterance && currentUtterance.text === text) {
+      resetSpeechButtons();
+      return;
+    }
+  }
+  
+  resetSpeechButtons();
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-IN'; // Indian English accent
+  
+  utterance.onend = () => {
+    button.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">volume_up</span>
+      <span>Listen</span>
+    `;
+    button.className = "speech-btn mt-4 self-start px-3 py-1.5 bg-nyaya-gold/10 hover:bg-nyaya-gold/20 text-primary border border-nyaya-gold rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors";
+  };
+  
+  currentUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
+  
+  button.innerHTML = `
+    <span class="material-symbols-outlined text-[16px]">volume_off</span>
+    <span>Stop</span>
+  `;
+  button.className = "speech-btn mt-4 self-start px-3 py-1.5 bg-nyaya-gold text-white border border-nyaya-gold rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors";
+}
+
+function resetSpeechButtons() {
+  const buttons = document.querySelectorAll(".speech-btn");
+  buttons.forEach(btn => {
+    btn.innerHTML = `
+      <span class="material-symbols-outlined text-[16px]">volume_up</span>
+      <span>Listen</span>
+    `;
+    btn.className = "speech-btn mt-4 self-start px-3 py-1.5 bg-nyaya-gold/10 hover:bg-nyaya-gold/20 text-primary border border-nyaya-gold rounded-full text-xs font-semibold flex items-center gap-1.5 transition-colors";
+  });
+}
+
+// Bookmark, Share and Toast Utilities
+function toggleBookmark(button) {
+  const currentChat = chats.find(c => c.id === activeChatId);
+  if (!currentChat) return;
+
+  const icon = button.querySelector(".material-symbols-outlined");
+  currentChat.bookmarked = !currentChat.bookmarked;
+  saveToStorage();
+
+  if (currentChat.bookmarked) {
+    if (icon) {
+      icon.innerText = "bookmark";
+      icon.style.fontVariationSettings = "'FILL' 1";
+      icon.classList.add("text-nyaya-gold");
+    }
+    showToast("Chat bookmarked successfully!");
+  } else {
+    if (icon) {
+      icon.innerText = "bookmark_border";
+      icon.style.fontVariationSettings = "'FILL' 0";
+      icon.classList.remove("text-nyaya-gold");
+    }
+    showToast("Bookmark removed!");
+  }
+  renderSidebar();
+}
+
+function shareChat() {
+  const currentChat = chats.find(c => c.id === activeChatId);
+  if (!currentChat) {
+    showToast("No active chat to share.");
+    return;
+  }
+  
+  if (currentChat.messages.length === 0) {
+    showToast("Cannot share an empty chat.");
+    return;
+  }
+
+  let transcript = `=== NyayaDiary Chat Transcript ===\n`;
+  transcript += `Topic: ${currentChat.title}\n`;
+  transcript += `Date: ${new Date().toLocaleDateString()}\n`;
+  transcript += `==================================\n\n`;
+
+  currentChat.messages.forEach(msg => {
+    const sender = msg.sender === "user" ? "User" : "NyayaDiary (AI)";
+    let text = msg.text;
+
+    if (msg.isSample) {
+      text = "A 2-day verbal notice is generally invalid under the Karnataka Rent Control Act, 2001. A landlord must provide written notice, and the duration depends on the lease agreement (typically 1 month). You cannot be forcibly evicted without a court order.";
+    }
+
+    transcript += `[${sender}]:\n${text}\n\n`;
+  });
+
+  transcript += `Shared via NyayaDiary Legal Assistant\n`;
+
+  navigator.clipboard.writeText(transcript).then(() => {
+    showToast("Formatted transcript copied to clipboard!");
+  }).catch(() => {
+    showToast("Unable to copy transcript.");
+  });
+}
+
+function showToast(message) {
+  let toastContainer = document.getElementById("toastContainer");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.id = "toastContainer";
+    toastContainer.className = "fixed bottom-24 right-6 z-50 flex flex-col gap-2 pointer-events-none";
+    document.body.appendChild(toastContainer);
+  }
+  
+  const toast = document.createElement("div");
+  toast.className = "bg-primary-container/95 text-on-primary backdrop-blur px-4 py-3 rounded-lg shadow-lg border border-outline-variant/20 text-xs font-semibold tracking-wide flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-300";
+  toast.innerHTML = `
+    <span class="material-symbols-outlined text-[16px] text-nyaya-gold">info</span>
+    <span>${message}</span>
+  `;
+  
+  toastContainer.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.remove("translate-y-4", "opacity-0");
+  }, 10);
+  
+  setTimeout(() => {
+    toast.classList.add("translate-y-4", "opacity-0");
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 2500);
+}
+
+// ⌨️ Enter Key Event Listener
+document.querySelector("textarea").addEventListener("keydown", function(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// 📱 Mobile Navigation Sidebar Toggle
+function toggleMobileSidebar(show) {
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  if (!sidebar || !backdrop) return;
+
+  if (show) {
+    sidebar.classList.remove("-translate-x-full");
+    sidebar.classList.add("translate-x-0");
+    backdrop.classList.remove("hidden");
+  } else {
+    sidebar.classList.add("-translate-x-full");
+    sidebar.classList.remove("translate-x-0");
+    backdrop.classList.add("hidden");
+  }
+}
+
+// 🎤 Speech Recognition / Microphone Input
+let recognition = null;
+function startSpeechRecognition() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    showToast("Speech recognition is not supported in this browser.");
+    return;
+  }
+
+  const micButton = document.getElementById("micButton");
+  const textarea = document.querySelector("textarea");
+  if (!micButton || !textarea) return;
+
+  if (recognition) {
+    recognition.stop();
+    return;
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang = 'en-IN'; // Indian English accent
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    micButton.querySelector(".material-symbols-outlined").innerText = "mic_double";
+    micButton.classList.add("bg-red-500/20", "text-red-500", "animate-pulse");
+    showToast("Listening... Speak now");
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error", event.error);
+    showToast("Voice input failed or was denied.");
+    stopSpeechRecState();
+  };
+
+  recognition.onend = () => {
+    stopSpeechRecState();
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    textarea.value = (textarea.value + " " + transcript).trim();
+    textarea.focus();
+    // Auto-expand textarea
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  };
+
+  recognition.start();
+
+  function stopSpeechRecState() {
+    if (micButton) {
+      micButton.querySelector(".material-symbols-outlined").innerText = "mic";
+      micButton.classList.remove("bg-red-500/20", "text-red-500", "animate-pulse");
+    }
+    recognition = null;
+  }
+}
+
+// 👤 Profile Modal Operations
+function openProfileModal() {
+  const modal = document.getElementById("profileModal");
+  const input = document.getElementById("profileNameInput");
+  if (!modal || !input) return;
+
+  input.value = userProfileName;
+  modal.classList.remove("hidden");
+  setTimeout(() => {
+    modal.firstElementChild.classList.remove("scale-95");
+    modal.firstElementChild.classList.add("scale-100");
+  }, 10);
+}
+
+function closeProfileModal() {
+  const modal = document.getElementById("profileModal");
+  if (!modal) return;
+
+  modal.firstElementChild.classList.remove("scale-100");
+  modal.firstElementChild.classList.add("scale-95");
+  setTimeout(() => {
+    modal.classList.add("hidden");
+  }, 200);
+}
+
+function saveProfileSettings() {
+  const input = document.getElementById("profileNameInput");
+  if (!input) return;
+
+  const newName = input.value.trim();
+  if (newName) {
+    userProfileName = newName;
+    localStorage.setItem("nyayadiary_profile_name", newName);
+    const nameSpan = document.getElementById("profileNameSpan");
+    if (nameSpan) nameSpan.innerText = newName;
+    showToast("Profile settings saved!");
+  }
+  closeProfileModal();
+}
+
+function clearAllChats() {
+  if (confirm("Are you sure you want to delete all chats and start fresh? This cannot be undone.")) {
+    window.speechSynthesis.cancel();
+    localStorage.removeItem("nyayadiary_chats");
+    localStorage.removeItem("nyayadiary_active_chat_id");
+    chats = [];
+    activeChatId = "";
+    closeProfileModal();
+    initApp();
+    showToast("All chat history cleared.");
+  }
+}
+</script>

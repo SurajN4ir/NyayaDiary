@@ -1,0 +1,16 @@
+# Python Virtual Environments
+venv/
+nyayadiary-backend/venv/
+.venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+
+# Local Environment variables
+.env
+nyayadiary-backend/.env
+
+# OS Files
+.DS_Store
+Thumbs.db
